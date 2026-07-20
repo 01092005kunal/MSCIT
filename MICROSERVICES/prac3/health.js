@@ -16,7 +16,7 @@ app.get("/healthtracker", (req, res) => {
 });
 
 // POST a new health record
-app.post("/healthcare", (req, res) => {
+app.post("/healthtracker", (req, res) => {
     const healthdata = {
         id: healthdatas.length + 1,
         title: req.body.title,
