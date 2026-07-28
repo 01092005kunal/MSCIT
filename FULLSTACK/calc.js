@@ -1,53 +1,27 @@
+function calculatePrice(distance) {
+    let price = 0;
 
-function calculatePrice(n, taxiprices) {
-  if (n < 0) {
-    throw new Error("Trip distance cannot be negative.");
-  } 
-//   n = tripDistance
-
-
-  const sortedprices = [...taxiprices].sort((a, b) => a.lower - b.lower);
-
-  let totalPrice = 0;
-  let remaining = n;
-
-  for (const { lower, upper, pricePerKm } of sortedprices) {
-    if (remaining <= 0) break;
-
-    let slabSpanAvailable;
-    if (upper === null) {
-      slabSpanAvailable = remaining;
-    } else {
-      slabSpanAvailable = Math.min(upper - lower, remaining);
+    // Slab 1: 0–5 km → ₹10/km
+    if (distance <= 5) {
+        price = distance * 10;
     }
 
-    if (slabSpanAvailable <= 0) continue;
+    // Slab 2: 5–10 km → ₹6/km
+    else if (distance <= 10) {
+        price = (5 * 10) + (distance - 5) * 6;
+    }
 
-    totalPrice += slabSpanAvailable * pricePerKm;
-    remaining -= slabSpanAvailable;
-  }
+    // Slab 3: Above 10 km → ₹4/km
+    else {
+        price = (5 * 10) + (5 * 6) + (distance - 10) * 4;
+    }
 
-  if (remaining > 0) {
-    throw new Error(
-      `Taxi prices do not cover the full trip distance (missing coverage for the last ${remaining} km).`
-    );
-  }
-
-  return totalPrice;
+    return price;
 }
-
 
 const tripDistance = 7;
 
-const taxiprices = [
-  { lower: 0, upper: 5, pricePerKm: 10 },    
-  { lower: 5, upper: 10, pricePerKm: 6 },    
-  { lower: 10, upper: null, pricePerKm: 4 }, 
-];
+const totalPrice = calculatePrice(tripDistance);
 
-
-const price = calculatePrice(tripDistance, taxiprices);
-console.log("Taxi prices:", taxiprices);
-console.log(`Trip distance: ${tripDistance} km`);
-console.log(`Total price: ₹${price}`);
-
+console.log("Trip Distance:", tripDistance, "km");
+console.log("Total Price: ₹" + totalPrice);
