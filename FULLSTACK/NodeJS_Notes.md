@@ -9,10 +9,8 @@ mainly on the server.
 ## Why Run-time Environment is used ?
 
 A runtme environment is a platfrom where th ecode which is already in a compiled form it re compiles and translets it in "Binary"
-for the cpu .. so it bassically it an  interpreter , which takes the code and convert it into a binary form .. 
+for the cpu .. so it bassically it an  interpreter , which takes the code and convert it into a binary form 
 "So called Trnaslater".
-
-
 
 Before Node.js: - JavaScript ran only in browsers.
 
