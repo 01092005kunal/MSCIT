@@ -22,6 +22,10 @@
 
 // console.log(0.3)
 
+
+// object destructuring
+
+
 const address= {
         street: "123 Main St",
         city: "Anytown",
