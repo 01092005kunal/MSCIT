@@ -6,7 +6,7 @@ Node.js is an **open-source, cross-platform JavaScript runtime
 environment** that allows JavaScript to run **outside the web browser**,
 mainly on the server.
 
-##why Run-time Environment is used ?
+## Why Run-time Environment is used ?
 
 A runtme environment is a platfrom where th ecode which is already in a compiled form it re compiles and translets it in "Binary"
 for the cpu .. so it bassically it an  interpreter , which takes the code and convert it into a binary form .. 
