@@ -1,0 +1,12 @@
+{
+  "name": "hello-world-express",
+  "version": "1.0.0",
+  "description": "A Dockerized Express.js Hello World app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
