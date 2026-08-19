@@ -1,0 +1,14 @@
+<main>
+  <p class="text-lg my-4">Counter app</p>
+
+  <div>
+    <input type="number" [value]="initalvalue" (input)="onInit($event)" placeholder="Enter the initial value" />
+
+    <button (click)="createCounter()">Create</button>
+
+    <p>Current Counter: {{ currentCountValue }}</p>
+
+    <app-counter [countValue]="currentCountValue" (countChanged)="currentCountValue = $event"> </app-counter>
+
+  </div>
+</main>
