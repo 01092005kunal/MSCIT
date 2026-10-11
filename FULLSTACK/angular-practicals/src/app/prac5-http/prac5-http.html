@@ -1,0 +1,40 @@
+<h2>Practical 5: HTTP Calls using REST API (Angular)</h2>
+<p>Concepts: Consuming REST API using Angular HttpClient and Observable subscription</p>
+<hr>
+
+<button (click)="fetchUsers()">Refresh / Fetch Data</button>
+<br><br>
+
+<div *ngIf="loading">
+  <p><b>Loading data from API... Please wait.</b></p>
+</div>
+
+<div *ngIf="error" style="color: red;">
+  <p><b>Error: {{ error }}</b></p>
+</div>
+
+<div *ngIf="!loading && !error">
+  <h3>Users List ({{ users.length }} records):</h3>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Company</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.company.name }}</td>
+        <td>{{ user.address.city }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

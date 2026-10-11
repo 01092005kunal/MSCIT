@@ -1,4 +1,4 @@
-<h1>Angular Practicals (Practicals 1 to 4)</h1>
+<h1>Angular Practicals (Practicals 1 to 6)</h1>
 <p>Ruia College MSc IT - Full Stack Practical</p>
 <hr>
 
@@ -9,6 +9,8 @@
   <button (click)="setPractical(2)" [disabled]="activePractical === 2">Practical 2 (Counter App)</button>
   <button (click)="setPractical(3)" [disabled]="activePractical === 3">Practical 3 (Timer App)</button>
   <button (click)="setPractical(4)" [disabled]="activePractical === 4">Practical 4 (Routing)</button>
+  <button (click)="setPractical(5)" [disabled]="activePractical === 5">Practical 5 (HTTP Calls)</button>
+  <button (click)="setPractical(6)" [disabled]="activePractical === 6">Practical 6 (Posting Data)</button>
 </div>
 <hr>
 
@@ -17,3 +19,5 @@
 <app-prac2-counter *ngIf="activePractical === 2"></app-prac2-counter>
 <app-prac3-timer *ngIf="activePractical === 3"></app-prac3-timer>
 <app-prac4-routing *ngIf="activePractical === 4"></app-prac4-routing>
+<app-prac5-http *ngIf="activePractical === 5"></app-prac5-http>
+<app-prac6-post *ngIf="activePractical === 6"></app-prac6-post>

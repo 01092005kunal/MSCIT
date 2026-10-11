@@ -1,0 +1,57 @@
+<h2>Practical 6: Posting Data to REST API (Angular)</h2>
+<p>Concepts: Submitting Data using Angular HttpClient POST with Template-Driven Form</p>
+<hr>
+
+<h3>Create New Post</h3>
+<form (ngSubmit)="handleSubmit()">
+  <table>
+    <tr>
+      <td>User ID:</td>
+      <td><input type="number" [(ngModel)]="userId" name="userId" min="1"></td>
+    </tr>
+    <tr>
+      <td>Post Title:</td>
+      <td><input type="text" [(ngModel)]="title" name="title" placeholder="Enter title" size="40"></td>
+    </tr>
+    <tr>
+      <td>Post Body:</td>
+      <td><textarea [(ngModel)]="body" name="body" placeholder="Enter body content" rows="4" cols="42"></textarea></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button type="submit" [disabled]="loading">{{ loading ? 'Submitting...' : 'Post Data (Submit)' }}</button></td>
+    </tr>
+  </table>
+</form>
+
+<br>
+<p *ngIf="statusMessage"><b>{{ statusMessage }}</b></p>
+
+<div *ngIf="responseResult">
+  <hr>
+  <h3>API Response Received:</h3>
+  <pre style="background: #eee; padding: 10px;">{{ responseResult | json }}</pre>
+</div>
+
+<div *ngIf="postsList.length > 0">
+  <hr>
+  <h3>Recently Submitted Posts:</h3>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Assigned ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>User ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of postsList">
+        <td>{{ post.id }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.body }}</td>
+        <td>{{ post.userId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

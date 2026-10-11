@@ -10,10 +10,10 @@
 
 | Practical No. | Date | Topic | Framework / Language |
 | :---: | :---: | :--- | :--- |
-| **Practical 1** | 05/08/2026 | Price calculator | Angular (JS) |
-| **Practical 2** | 12/08/2026 | Text Interpolation, Event Handling, Custom Events and 2-way data binding using Counter App | Angular (JS) |
-| **Practical 3** | 19/08/2026 | Conditional and List Rendering using Timer App | Angular (JS) |
-| **Practical 4** | 26/08/2026 | Routing using Timer and stopwatch App | Angular (JS) |
+| **Practical 1** | 05/08/2026 | Price calculator | Node.js (ES Modules / MJS) |
+| **Practical 2** | 12/08/2026 | Text Interpolation, Event Handling, Custom Events and 2-way data binding using Counter App | Angular (TS) |
+| **Practical 3** | 19/08/2026 | Conditional and List Rendering using Timer App | Angular (TS) |
+| **Practical 4** | 26/08/2026 | Routing using Timer and stopwatch App | Angular (TS) |
 | **Practical 5** | 02/09/2026 | HTTP calls using REST API | React (JSX) |
 | **Practical 6** | 09/09/2026 | Posting data to REST API | React (JSX) |
 | **Practical 7** | 23/09/2026 | Components, conditional rendering, list rendering, text Interpolation, and form handling using the Counter App | React (JSX) |
@@ -21,60 +21,122 @@
 
 ---
 
-## Practical 1: Price Calculator
-- **Aim:** To develop a Slab-based Price Calculator (Distance Fare Calculator) in Angular using JavaScript.
-- **Key Concepts:** Scope variables, 2-way data binding with `ng-model`, conditional slab pricing logic (0-5 km: ₹10/km, 5-10 km: ₹6/km, >10 km: ₹4/km).
+## Practical 1: Price Calculator (ES Modules)
+- **Aim:** To implement a Slab-based Price Calculator using JavaScript ES Modules (`.mjs`) demonstrating `export` and `import` statements in Node.js.
+- **Key Concepts:** ES Module system, named and default exports (`export const`, `export default`), module imports (`import { ... } from './...'`), tiered rate slabs (0–5 km: ₹10/km, 5–10 km: ₹6/km, >10 km: ₹4/km).
 - **Files:**
-  - `Practical_1_Price_Calculator/index.html`
-  - `Practical_1_Price_Calculator/app.js`
+  - `slab.mjs`
+  - `calc.mjs`
+  - `index.mjs`
 
 ### Code:
-**`app.js`:**
+
+**`slab.mjs`:**
 ```javascript
-var app = angular.module('priceApp', []);
+// slab.mjs - Defines and exports rate slab definitions
+export const slabs = [
+    { name: "Slab 1", minKm: 0, maxKm: 5, rate: 10 },      // 0–5 km: ₹10/km
+    { name: "Slab 2", minKm: 5, maxKm: 10, rate: 6 },      // 5–10 km: ₹6/km
+    { name: "Slab 3", minKm: 10, maxKm: Infinity, rate: 4 } // Above 10 km: ₹4/km
+];
 
-app.controller('PriceController', function($scope) {
-    $scope.distance = 7;
+export default slabs;
+```
 
-    $scope.calculatePrice = function(distance) {
-        var d = Number(distance) || 0;
-        var price = 0;
+**`calc.mjs`:**
+```javascript
+// calc.mjs - Imports slab definitions and exports price calculation logic
+import { slabs } from './slab.mjs';
 
-        if (d <= 0) return 0;
+export function calculatePrice(distance) {
+    const d = Number(distance) || 0;
+    let price = 0;
 
-        // Slab 1: 0–5 km → ₹10/km
-        if (d <= 5) {
-            price = d * 10;
-        }
-        // Slab 2: 5–10 km → ₹6/km
-        else if (d <= 10) {
-            price = (5 * 10) + (d - 5) * 6;
-        }
-        // Slab 3: Above 10 km → ₹4/km
-        else {
-            price = (5 * 10) + (5 * 6) + (d - 10) * 4;
-        }
+    if (d <= 0) return 0;
 
-        return price;
-    };
+    // Slab 1: 0–5 km → ₹10/km
+    if (d <= 5) {
+        price = d * slabs[0].rate;
+    }
+    // Slab 2: 5–10 km → ₹6/km
+    else if (d <= 10) {
+        price = (5 * slabs[0].rate) + (d - 5) * slabs[1].rate;
+    }
+    // Slab 3: Above 10 km → ₹4/km
+    else {
+        price = (5 * slabs[0].rate) + (5 * slabs[1].rate) + (d - 10) * slabs[2].rate;
+    }
 
-    $scope.getBreakdown = function() {
-        var d = Number($scope.distance) || 0;
-        if (d <= 0) return 'Distance must be greater than 0';
+    return price;
+}
 
-        if (d <= 5) {
-            return d + ' km × ₹10 = ₹' + (d * 10);
-        } else if (d <= 10) {
-            return '(5 km × ₹10) + (' + (d - 5) + ' km × ₹6) = ₹' + ((5 * 10) + (d - 5) * 6);
-        } else {
-            return '(5 km × ₹10) + (5 km × ₹6) + (' + (d - 10) + ' km × ₹4) = ₹' + ((5 * 10) + (5 * 6) + (d - 10) * 4);
-        }
-    };
+export function getBreakdown(distance) {
+    const d = Number(distance) || 0;
+    if (d <= 0) return "Distance must be greater than 0";
 
-    $scope.reset = function() {
-        $scope.distance = 0;
-    };
+    if (d <= 5) {
+        return `${d} km × ₹${slabs[0].rate} = ₹${d * slabs[0].rate}`;
+    } else if (d <= 10) {
+        return `(5 km × ₹${slabs[0].rate}) + (${d - 5} km × ₹${slabs[1].rate}) = ₹${calculatePrice(d)}`;
+    } else {
+        return `(5 km × ₹${slabs[0].rate}) + (5 km × ₹${slabs[1].rate}) + (${d - 10} km × ₹${slabs[2].rate}) = ₹${calculatePrice(d)}`;
+    }
+}
+```
+
+**`index.mjs`:**
+```javascript
+// index.mjs - Main execution demonstrating ES Module imports
+import { slabs } from './slab.mjs';
+import { calculatePrice, getBreakdown } from './calc.mjs';
+
+console.log("=========================================");
+console.log(" Practical 1: Price Calculator (ESM .mjs)");
+console.log("=========================================\n");
+
+console.log("Rate Slabs Loaded from Module (slab.mjs):");
+slabs.forEach((s) => {
+    const limit = s.maxKm === Infinity ? "Above 10 km" : `${s.minKm}–${s.maxKm} km`;
+    console.log(` - ${s.name}: ${limit} @ ₹${s.rate}/km`);
 });
+
+console.log("\n--- Fare Calculations ---");
+const testDistances = [3, 7, 15];
+
+testDistances.forEach((distance) => {
+    console.log(`\nTrip Distance: ${distance} km`);
+    console.log(`Breakdown: ${getBreakdown(distance)}`);
+    console.log(`Total Price: ₹${calculatePrice(distance)}`);
+});
+```
+
+### Execution & Output:
+```bash
+node index.mjs
+```
+```
+=========================================
+ Practical 1: Price Calculator (ESM .mjs)
+=========================================
+
+Rate Slabs Loaded from Module (slab.mjs):
+ - Slab 1: 0–5 km @ ₹10/km
+ - Slab 2: 5–10 km @ ₹6/km
+ - Slab 3: Above 10 km @ ₹4/km
+
+--- Fare Calculations ---
+
+Trip Distance: 3 km
+Breakdown: 3 km × ₹10 = ₹30
+Total Price: ₹30
+
+Trip Distance: 7 km
+Breakdown: (5 km × ₹10) + (2 km × ₹6) = ₹62
+Total Price: ₹62
+
+Trip Distance: 15 km
+Breakdown: (5 km × ₹10) + (5 km × ₹6) + (5 km × ₹4) = ₹100
+Total Price: ₹100
 ```
 
 ---
@@ -161,23 +223,23 @@ app.controller('CounterController', function($scope) {
 
 ---
 
-## Practical 5: HTTP calls using REST API (React)
-- **Aim:** To fetch and display data from a REST API using HTTP GET requests in a React component.
-- **Key Concepts:** `fetch()`, `useEffect()`, `useState()`, Promise handling, Loading and Error state management.
+## Practical 5: HTTP calls using REST API (Angular)
+- **Aim:** To fetch and display data from a REST API using HTTP GET requests with Angular `HttpClient`.
+- **Key Concepts:** `HttpClient`, `provideHttpClient()`, Observable subscription (`.subscribe()`), `*ngIf` loading/error states, `*ngFor` table rendering.
 - **API Endpoint:** `https://jsonplaceholder.typicode.com/users`
 - **Files:**
-  - `Practical_5_HTTP_REST_API/App.jsx`
-  - `Practical_5_HTTP_REST_API/index.html`
+  - `angular-practicals/src/app/prac5-http/prac5-http.ts`
+  - `angular-practicals/src/app/prac5-http/prac5-http.html`
 
 ---
 
-## Practical 6: Posting Data to REST API (React)
-- **Aim:** To submit user data to a REST API using HTTP POST in React with a controlled form.
-- **Key Concepts:** Controlled form inputs (`useState`), `fetch(url, { method: 'POST', body, headers })`, handling response status 201 Created, updating UI dynamically.
+## Practical 6: Posting Data to REST API (Angular)
+- **Aim:** To submit user data to a REST API using HTTP POST in Angular with a template-driven form.
+- **Key Concepts:** Template-driven forms (`[(ngModel)]`), `HttpClient.post()`, handling response status 201 Created, `json` pipe, dynamic list updating.
 - **API Endpoint:** `https://jsonplaceholder.typicode.com/posts`
 - **Files:**
-  - `Practical_6_Posting_Data_REST_API/App.jsx`
-  - `Practical_6_Posting_Data_REST_API/index.html`
+  - `angular-practicals/src/app/prac6-post/prac6-post.ts`
+  - `angular-practicals/src/app/prac6-post/prac6-post.html`
 
 ---
 
