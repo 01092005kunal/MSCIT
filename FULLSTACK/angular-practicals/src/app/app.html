@@ -1,0 +1,19 @@
+<h1>Angular Practicals (Practicals 1 to 4)</h1>
+<p>Ruia College MSc IT - Full Stack Practical</p>
+<hr>
+
+<!-- Raw button navigation -->
+<div>
+  <b>Select Practical: </b>
+  <button (click)="setPractical(1)" [disabled]="activePractical === 1">Practical 1 (Price Calculator)</button>
+  <button (click)="setPractical(2)" [disabled]="activePractical === 2">Practical 2 (Counter App)</button>
+  <button (click)="setPractical(3)" [disabled]="activePractical === 3">Practical 3 (Timer App)</button>
+  <button (click)="setPractical(4)" [disabled]="activePractical === 4">Practical 4 (Routing)</button>
+</div>
+<hr>
+
+<!-- Display active practical -->
+<app-prac1-price-calc *ngIf="activePractical === 1"></app-prac1-price-calc>
+<app-prac2-counter *ngIf="activePractical === 2"></app-prac2-counter>
+<app-prac3-timer *ngIf="activePractical === 3"></app-prac3-timer>
+<app-prac4-routing *ngIf="activePractical === 4"></app-prac4-routing>

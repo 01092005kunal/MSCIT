@@ -1,0 +1,41 @@
+<h2>Practical 3: Timer App</h2>
+<p>Concepts: Conditional Rendering (*ngIf) and List Rendering (*ngFor)</p>
+<hr>
+
+<h2>Time: {{ seconds }} seconds</h2>
+
+<!-- 1. Conditional Rendering using *ngIf -->
+<div>
+  <p *ngIf="isRunning">Status: <b>Timer is Running...</b></p>
+  <p *ngIf="!isRunning && seconds > 0">Status: <b>Timer is Paused.</b></p>
+  <p *ngIf="!isRunning && seconds === 0">Status: <b>Timer is Reset (Idle).</b></p>
+</div>
+
+<!-- Controls -->
+<div>
+  <button (click)="startTimer()" [disabled]="isRunning">Start</button>
+  <button (click)="pauseTimer()" [disabled]="!isRunning">Pause</button>
+  <button (click)="recordLap()" [disabled]="!isRunning">Lap</button>
+  <button (click)="resetTimer()">Reset</button>
+</div>
+
+<hr>
+
+<!-- 2. List Rendering using *ngFor -->
+<h3>Recorded Laps (List Rendering)</h3>
+<p *ngIf="laps.length === 0">No laps recorded yet. Click 'Lap' while timer is running.</p>
+
+<table border="1" cellpadding="5" *ngIf="laps.length > 0">
+  <thead>
+    <tr>
+      <th>Lap #</th>
+      <th>Recorded Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of laps">
+      <td>Lap {{ item.lapNumber }}</td>
+      <td>{{ item.time }}</td>
+    </tr>
+  </tbody>
+</table>

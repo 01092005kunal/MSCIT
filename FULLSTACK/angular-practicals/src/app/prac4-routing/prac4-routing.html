@@ -1,0 +1,35 @@
+<h2>Practical 4: Routing using Timer and Stopwatch App</h2>
+<p>Concepts: Single Page Component Navigation between Countdown Timer and Stopwatch</p>
+<hr>
+
+<!-- Navigation links -->
+<div>
+  <b>Navigation: </b>
+  <button (click)="setView('timer')" [disabled]="activeView === 'timer'">Go to Countdown Timer</button> |
+  <button (click)="setView('stopwatch')" [disabled]="activeView === 'stopwatch'">Go to Stopwatch</button>
+</div>
+
+<hr>
+
+<!-- Timer View -->
+<div *ngIf="activeView === 'timer'">
+  <h3>Countdown Timer View</h3>
+  <p>Set duration (Minutes): <input type="number" [(ngModel)]="inputMinutes" min="1"></p>
+  <h3>Remaining Time: {{ remainingSeconds }} seconds</h3>
+  <div>
+    <button (click)="startTimer()" [disabled]="timerRunning">Start Timer</button>
+    <button (click)="stopTimer()" [disabled]="!timerRunning">Stop Timer</button>
+    <button (click)="resetTimer()">Reset</button>
+  </div>
+</div>
+
+<!-- Stopwatch View -->
+<div *ngIf="activeView === 'stopwatch'">
+  <h3>Stopwatch View</h3>
+  <h3>Elapsed Time: {{ stopwatchSeconds }} seconds</h3>
+  <div>
+    <button (click)="startStopwatch()" [disabled]="stopwatchRunning">Start</button>
+    <button (click)="pauseStopwatch()" [disabled]="!stopwatchRunning">Pause</button>
+    <button (click)="resetStopwatch()">Reset</button>
+  </div>
+</div>
