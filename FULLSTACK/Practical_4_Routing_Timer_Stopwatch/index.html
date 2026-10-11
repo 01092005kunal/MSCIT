@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 4: Routing using Timer and Stopwatch App</title>
+    <!-- AngularJS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Angular Route CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="routingApp">
+
+    <h1>Practical 4: Angular Routing</h1>
+    <p>Concepts: Single Page Routing between Timer View and Stopwatch View</p>
+    <hr>
+
+    <!-- Navigation Links -->
+    <nav>
+        <b>Navigation:</b>
+        <a href="#/timer">Go to Countdown Timer</a> |
+        <a href="#/stopwatch">Go to Stopwatch</a>
+    </nav>
+    <hr>
+
+    <!-- Main View Outlet where route template renders -->
+    <div ng-view></div>
+
+    <!-- Template for Timer View -->
+    <script type="text/ng-template" id="timer.html">
+        <h2>Countdown Timer View</h2>
+        <p>Set duration (Minutes): <input type="number" ng-model="inputMinutes" min="1"></p>
+        <h3>Remaining Time: {{ remainingSeconds }} seconds</h3>
+        <div>
+            <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
+            <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button>
+            <button ng-click="resetTimer()">Reset</button>
+        </div>
+    </script>
+
+    <!-- Template for Stopwatch View -->
+    <script type="text/ng-template" id="stopwatch.html">
+        <h2>Stopwatch View</h2>
+        <h3>Elapsed Time: {{ seconds }} seconds</h3>
+        <div>
+            <button ng-click="start()" ng-disabled="isRunning">Start</button>
+            <button ng-click="pause()" ng-disabled="!isRunning">Pause</button>
+            <button ng-click="reset()">Reset</button>
+        </div>
+    </script>
+
+</body>
+</html>

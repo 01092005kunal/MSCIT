@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 1: Price Calculator</title>
+    <!-- Angular JS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="priceApp" ng-controller="PriceController">
+
+    <h1>Practical 1: Price Calculator</h1>
+    <hr>
+
+    <h3>Enter Product Details</h3>
+    <table>
+        <tr>
+            <td>Product Name:</td>
+            <td><input type="text" ng-model="itemName"></td>
+        </tr>
+        <tr>
+            <td>Unit Price (Rs.):</td>
+            <td><input type="number" ng-model="price"></td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td><input type="number" ng-model="quantity"></td>
+        </tr>
+        <tr>
+            <td>Discount (%):</td>
+            <td><input type="number" ng-model="discount"></td>
+        </tr>
+        <tr>
+            <td>Tax / GST (%):</td>
+            <td><input type="number" ng-model="tax"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button ng-click="reset()">Reset</button></td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h3>Calculation Summary</h3>
+    <p>Product: <b>{{ itemName }}</b></p>
+    <p>Subtotal: Rs. {{ getSubtotal() }}</p>
+    <p>Discount Amount: Rs. {{ getDiscountAmount() }}</p>
+    <p>Tax Amount: Rs. {{ getTaxAmount() }}</p>
+    <h3>Total Price: Rs. {{ getTotalPrice() }}</h3>
+
+</body>
+</html>
