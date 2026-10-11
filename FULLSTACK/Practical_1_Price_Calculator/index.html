@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Practical 1: Price Calculator</title>
+    <title>Practical 1: Price Calculator (Slab-based)</title>
     <!-- Angular JS CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="app.js"></script>
@@ -10,44 +10,57 @@
 <body ng-app="priceApp" ng-controller="PriceController">
 
     <h1>Practical 1: Price Calculator</h1>
+    <p>Rate Slab Calculator (Trip Distance vs Fare)</p>
     <hr>
 
-    <h3>Enter Product Details</h3>
+    <!-- Slab Pricing Reference Table -->
+    <h3>Rate Slabs Reference:</h3>
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Slab</th>
+                <th>Distance Range</th>
+                <th>Rate per km</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Slab 1</td>
+                <td>0 – 5 km</td>
+                <td>₹10 / km</td>
+            </tr>
+            <tr>
+                <td>Slab 2</td>
+                <td>5 – 10 km</td>
+                <td>₹6 / km</td>
+            </tr>
+            <tr>
+                <td>Slab 3</td>
+                <td>Above 10 km</td>
+                <td>₹4 / km</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- Distance Input -->
+    <h3>Calculate Trip Fare:</h3>
     <table>
         <tr>
-            <td>Product Name:</td>
-            <td><input type="text" ng-model="itemName"></td>
-        </tr>
-        <tr>
-            <td>Unit Price (Rs.):</td>
-            <td><input type="number" ng-model="price"></td>
-        </tr>
-        <tr>
-            <td>Quantity:</td>
-            <td><input type="number" ng-model="quantity"></td>
-        </tr>
-        <tr>
-            <td>Discount (%):</td>
-            <td><input type="number" ng-model="discount"></td>
-        </tr>
-        <tr>
-            <td>Tax / GST (%):</td>
-            <td><input type="number" ng-model="tax"></td>
-        </tr>
-        <tr>
-            <td></td>
+            <td>Enter Trip Distance (km):</td>
+            <td><input type="number" ng-model="distance" min="0" step="any"></td>
             <td><button ng-click="reset()">Reset</button></td>
         </tr>
     </table>
 
     <hr>
 
-    <h3>Calculation Summary</h3>
-    <p>Product: <b>{{ itemName }}</b></p>
-    <p>Subtotal: Rs. {{ getSubtotal() }}</p>
-    <p>Discount Amount: Rs. {{ getDiscountAmount() }}</p>
-    <p>Tax Amount: Rs. {{ getTaxAmount() }}</p>
-    <h3>Total Price: Rs. {{ getTotalPrice() }}</h3>
+    <!-- Output Display -->
+    <h3>Calculation Output:</h3>
+    <p>Trip Distance: <b>{{ distance || 0 }} km</b></p>
+    <p>Calculation Breakdown: <i>{{ getBreakdown() }}</i></p>
+    <h2>Total Price: ₹{{ calculatePrice(distance) }}</h2>
 
 </body>
 </html>

@@ -22,8 +22,8 @@
 ---
 
 ## Practical 1: Price Calculator
-- **Aim:** To develop a simple Price Calculator in Angular using JavaScript.
-- **Key Concepts:** Scope variables, dynamic price calculation with quantity, discount percentage, and tax/GST percentage.
+- **Aim:** To develop a Slab-based Price Calculator (Distance Fare Calculator) in Angular using JavaScript.
+- **Key Concepts:** Scope variables, 2-way data binding with `ng-model`, conditional slab pricing logic (0-5 km: ₹10/km, 5-10 km: ₹6/km, >10 km: ₹4/km).
 - **Files:**
   - `Practical_1_Price_Calculator/index.html`
   - `Practical_1_Price_Calculator/app.js`
@@ -34,36 +34,45 @@
 var app = angular.module('priceApp', []);
 
 app.controller('PriceController', function($scope) {
-    $scope.itemName = 'Notebook';
-    $scope.price = 50;
-    $scope.quantity = 2;
-    $scope.discount = 10;
-    $scope.tax = 5;
+    $scope.distance = 7;
 
-    $scope.getSubtotal = function() {
-        return ($scope.price || 0) * ($scope.quantity || 0);
+    $scope.calculatePrice = function(distance) {
+        var d = Number(distance) || 0;
+        var price = 0;
+
+        if (d <= 0) return 0;
+
+        // Slab 1: 0–5 km → ₹10/km
+        if (d <= 5) {
+            price = d * 10;
+        }
+        // Slab 2: 5–10 km → ₹6/km
+        else if (d <= 10) {
+            price = (5 * 10) + (d - 5) * 6;
+        }
+        // Slab 3: Above 10 km → ₹4/km
+        else {
+            price = (5 * 10) + (5 * 6) + (d - 10) * 4;
+        }
+
+        return price;
     };
 
-    $scope.getDiscountAmount = function() {
-        return ($scope.getSubtotal() * ($scope.discount || 0)) / 100;
-    };
+    $scope.getBreakdown = function() {
+        var d = Number($scope.distance) || 0;
+        if (d <= 0) return 'Distance must be greater than 0';
 
-    $scope.getTaxAmount = function() {
-        var afterDiscount = $scope.getSubtotal() - $scope.getDiscountAmount();
-        return (afterDiscount * ($scope.tax || 0)) / 100;
-    };
-
-    $scope.getTotalPrice = function() {
-        var afterDiscount = $scope.getSubtotal() - $scope.getDiscountAmount();
-        return afterDiscount + $scope.getTaxAmount();
+        if (d <= 5) {
+            return d + ' km × ₹10 = ₹' + (d * 10);
+        } else if (d <= 10) {
+            return '(5 km × ₹10) + (' + (d - 5) + ' km × ₹6) = ₹' + ((5 * 10) + (d - 5) * 6);
+        } else {
+            return '(5 km × ₹10) + (5 km × ₹6) + (' + (d - 10) + ' km × ₹4) = ₹' + ((5 * 10) + (5 * 6) + (d - 10) * 4);
+        }
     };
 
     $scope.reset = function() {
-        $scope.itemName = '';
-        $scope.price = 0;
-        $scope.quantity = 0;
-        $scope.discount = 0;
-        $scope.tax = 0;
+        $scope.distance = 0;
     };
 });
 ```
